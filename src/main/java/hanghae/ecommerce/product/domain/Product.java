@@ -12,14 +12,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-//@Getter
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor
-//@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "product")
 public class Product {
 	@Id
@@ -35,9 +38,6 @@ public class Product {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "product_id")
 	private List<StockHistory> stockHistory = new ArrayList<>();
-
-	protected Product() {
-	}
 
 	public Product(String name, Integer stock) {
 		this.name = name;
@@ -101,25 +101,6 @@ public class Product {
 		addStockHistory(quantity, StockHistoryType.DECREASE);
 		return this;
 	}
-
-	//    public Product updateStock(Integer quantity, String operation) {
-	//        if ( quantity <= 0 ) {
-	//            throw new IllegalArgumentException("");
-	//        }
-	//
-	//        StockHistoryType type = toStockHistoryType(operation);
-	//        if ( type == StockHistoryType.INCREASE ) {
-	//            this.stock += quantity;
-	//        } else if ( type == StockHistoryType.DECREASE ) {
-	//            if ( this.stock < quantity ) {
-	//                throw new IllegalArgumentException("Not enough stock to decrease");
-	//            }
-	//            this.stock -= quantity;
-	//        }
-	//        addStockHistory(quantity, type);
-	//
-	//        return this;
-	//    }
 
 	public void addStockHistory(Integer quantity, StockHistoryType type) {
 		StockHistory stockHistory = StockHistory.of(quantity, type);

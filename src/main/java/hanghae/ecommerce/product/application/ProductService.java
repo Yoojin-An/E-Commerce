@@ -5,15 +5,12 @@ import org.springframework.stereotype.Service;
 import hanghae.ecommerce.product.dao.ProductRepository;
 import hanghae.ecommerce.product.domain.Product;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 
 @Service
-//@AllArgsConstructor
+@AllArgsConstructor
 public class ProductService {
 	private final ProductRepository productRepository;
-
-	public ProductService(ProductRepository productRepository) {
-		this.productRepository = productRepository;
-	}
 
 	private void validateDuplicate(String name) {
 		if (productRepository.existsByName(name)) {

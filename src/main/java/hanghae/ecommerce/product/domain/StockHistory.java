@@ -10,13 +10,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Builder
 @AllArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "stock_history")
 public class StockHistory {
 	@Id
@@ -32,9 +34,6 @@ public class StockHistory {
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
 	private Instant createdAt = Instant.now();
-
-	protected StockHistory() {
-	}
 
 	public StockHistory(Integer quantity, StockHistoryType type) {
 		this.quantity = quantity;

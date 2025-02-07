@@ -18,14 +18,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @Builder
-//@AllArgsConstructor
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "`order`")
 public class Order {
 	@Id
@@ -51,9 +54,6 @@ public class Order {
 
 	private Instant completedAt = null;
 
-	public Order() {
-	}
-
 	public Order(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
@@ -68,10 +68,6 @@ public class Order {
 		order.id = id;
 		return order;
 	}
-
-	//    public Long getId() { return id; }
-
-	//    public List<OrderItem> getOrderItems() { return orderItems; }
 
 	public Order complete() {
 		status = OrderStatus.COMPLETED;

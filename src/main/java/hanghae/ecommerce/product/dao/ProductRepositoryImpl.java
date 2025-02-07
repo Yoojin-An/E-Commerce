@@ -5,15 +5,12 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import hanghae.ecommerce.product.domain.Product;
+import lombok.AllArgsConstructor;
 
-//@AllArgsConstructor
+@AllArgsConstructor
 @Repository
 public class ProductRepositoryImpl implements ProductRepository {
 	private final ProductJpaRepository productJpaRepository;
-
-	public ProductRepositoryImpl(ProductJpaRepository productJpaRepository) {
-		this.productJpaRepository = productJpaRepository;
-	}
 
 	@Override
 	public Product create(Product product) {

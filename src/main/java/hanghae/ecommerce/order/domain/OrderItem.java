@@ -7,10 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
-//@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class OrderItem {
 	@Id
@@ -22,9 +24,6 @@ public class OrderItem {
 	private Product product;
 
 	private Integer quantity;
-
-	public OrderItem() {
-	}
 
 	public OrderItem(Product product, Integer quantity) {
 		this.product = product;

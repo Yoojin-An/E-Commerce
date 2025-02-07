@@ -11,16 +11,13 @@ import hanghae.ecommerce.order.domain.OrderItem;
 import hanghae.ecommerce.order.domain.OrderStatus;
 import hanghae.ecommerce.product.application.ProductService;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class OrderService {
 	private final ProductService productService;
 	private final OrderRepository orderRepository;
-
-	public OrderService(ProductService productService, OrderRepository orderRepository) {
-		this.productService = productService;
-		this.orderRepository = orderRepository;
-	}
 
 	@Transactional
 	public Order createOrder(List<OrderItem> orderItems) {

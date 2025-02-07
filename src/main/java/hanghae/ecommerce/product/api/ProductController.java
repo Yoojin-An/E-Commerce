@@ -18,15 +18,12 @@ import hanghae.ecommerce.product.dto.ProductRequest;
 import hanghae.ecommerce.product.dto.StockResponse;
 import hanghae.ecommerce.product.dto.StockUpdateRequest;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping("products")
-//@AllArgsConstructor
+@AllArgsConstructor
 public class ProductController {
-	public ProductController(ProductService productService) {
-		this.productService = productService;
-	}
-
 	private final ProductService productService;
 
 	@Tag(name = "상품 입고", description = "상품을 등록합니다.")
