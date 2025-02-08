@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/e_commerce
+    url: jdbc:mysql://db_mysql:3306/e_commerce
     username: root
     password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
