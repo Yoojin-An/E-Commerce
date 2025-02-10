@@ -9,9 +9,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class OrderItem {
@@ -38,14 +40,6 @@ public class OrderItem {
 		OrderItem orderItem = OrderItem.of(product, quantity);
 		orderItem.id = id;
 		return orderItem;
-	}
-
-	public Product getProduct() {
-		return product;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
 	}
 
 	public void validateQuantity() {

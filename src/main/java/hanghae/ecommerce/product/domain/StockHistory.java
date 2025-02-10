@@ -13,8 +13,10 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter
 @Entity
 @Builder
 @AllArgsConstructor
@@ -39,22 +41,6 @@ public class StockHistory {
 		this.quantity = quantity;
 		this.type = type;
 		this.createdAt = Instant.now();
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public StockHistoryType getType() {
-		return type;
-	}
-
-	public Instant getCreatedAt() {
-		return createdAt;
 	}
 
 	public static StockHistory of(Integer quantity, StockHistoryType type) {

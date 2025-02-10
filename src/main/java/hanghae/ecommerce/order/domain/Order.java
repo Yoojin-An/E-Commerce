@@ -80,9 +80,8 @@ public class Order {
 		return this;
 	}
 
-	public OrderStatus modifyStatus(OrderStatus status) {
+	public void modifyStatus(OrderStatus status) {
 		this.status = status;
-		return status;
 	}
 
 	public void cancel() {

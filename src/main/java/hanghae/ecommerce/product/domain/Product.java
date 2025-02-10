@@ -61,35 +61,16 @@ public class Product {
 		return product;
 	}
 
-	public Integer getStock() {
-		return this.stock;
-	}
-
-	public Long getId() {
-		return this.id;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
-	public List<StockHistory> getStockHistory() {
-		return this.stockHistory;
-	}
-
-	public Product increaseStock(Integer quantity) {
-		System.out.println("increaseStock() called with quantity: " + quantity);
+	public void increaseStock(Integer quantity) {
 
 		if (quantity == null || quantity <= 0) {
-			System.out.println("Throwing IllegalArgumentException due to invalid quantity.");
 			throw new IllegalArgumentException("Invalid quantity to increase stock");
 		}
 		this.stock += quantity;
 		addStockHistory(quantity, StockHistoryType.INCREASE);
-		return this;
 	}
 
-	public Product decreaseStock(Integer quantity) {
+	public void decreaseStock(Integer quantity) {
 		if (quantity == null || quantity <= 0) {
 			throw new IllegalArgumentException("Invalid quantity to decrease stock");
 		}
@@ -99,7 +80,6 @@ public class Product {
 		}
 		this.stock -= quantity;
 		addStockHistory(quantity, StockHistoryType.DECREASE);
-		return this;
 	}
 
 	public void addStockHistory(Integer quantity, StockHistoryType type) {
