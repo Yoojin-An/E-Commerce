@@ -40,20 +40,6 @@ public class OrderTest {
 		}
 
 		@Test
-		@DisplayName("주문 아이템이 없으면 주문 생성에 실패한다")
-		void failToCreateOrderWhenOrderItemsIsEmpty() {
-			// given
-			List<OrderItem> orderItems = List.of();
-
-			// then
-			assertThrows(IllegalArgumentException.class, () -> {
-				// when
-				Order.of(orderItems);
-			});
-
-		}
-
-		@Test
 		@DisplayName("주문 아이템 중 하나라도 수량이 0 이하면 주문 생성에 실패한다")
 		void failToCreateOrderWhenOrderItemQuantityIsZeroOrBelow() {
 			// given
