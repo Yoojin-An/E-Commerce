@@ -1,0 +1,38 @@
+services:
+  db_mysql:
+    image: "mysql:latest"
+    container_name: db_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_DATABASE: "e_commerce"
+      MYSQL_ROOT_HOST: '%'
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+    networks:
+      - ecommerce_network
+
+  web:
+    depends_on:
+      db_mysql:
+        condition: service_healthy
+    image: e-commerce
+    container_name: e-commerce
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db_mysql:3306/e_commerce
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    networks:
+      - ecommerce_network
+
+networks:
+  ecommerce_network:
+    driver: bridge
