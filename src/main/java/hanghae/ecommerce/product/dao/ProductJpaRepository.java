@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Lock;
 import hanghae.ecommerce.product.domain.Product;
 import jakarta.persistence.LockModeType;
 
-interface ProductJpaRepository extends JpaRepository<Product, Long> {
+public interface ProductJpaRepository extends JpaRepository<Product, Long> {
 
 	@Lock(LockModeType.OPTIMISTIC)
 	Optional<Product> findById(Long productId);
