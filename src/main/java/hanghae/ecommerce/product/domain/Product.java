@@ -3,6 +3,9 @@ package hanghae.ecommerce.product.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,6 +43,7 @@ public class Product {
 	private Integer stock;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "product_id")
 	private List<StockHistory> stockHistory = new ArrayList<>();
 
