@@ -37,21 +37,27 @@ public class Order {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "order_id")
+	@Builder.Default
 	private List<OrderItem> orderItems = new ArrayList<>();
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
+	@Builder.Default
 	private OrderStatus status = OrderStatus.PENDING;
 
 	@CreatedDate
 	@Column(nullable = false, updatable = false)
+	@Builder.Default
 	private Instant createdAt = Instant.now();
 
 	@LastModifiedDate
+	@Builder.Default
 	private Instant updatedAt = null;
 
+	@Builder.Default
 	private Instant deletedAt = null;
 
+	@Builder.Default
 	private Instant completedAt = null;
 
 	public Order(List<OrderItem> orderItems) {

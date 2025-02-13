@@ -37,6 +37,7 @@ public class Product {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "product_id")
+	@Builder.Default
 	private List<StockHistory> stockHistory = new ArrayList<>();
 
 	public Product(String name, Integer stock) {
