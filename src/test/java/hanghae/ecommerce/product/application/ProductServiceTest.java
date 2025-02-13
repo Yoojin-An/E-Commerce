@@ -12,7 +12,6 @@ import hanghae.ecommerce.infrastructure.fake.FakeProductRepository;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductServiceTest {
-	private ProductFacade productFacade;
 	private ProductService productService;
 	private FakeProductRepository productRepository;
 
@@ -20,7 +19,6 @@ public class ProductServiceTest {
 	void setUp() {
 		this.productRepository = new FakeProductRepository();
 		this.productService = new ProductService(productRepository);
-		this.productFacade = new ProductFacade(productService);
 		productRepository.clear();
 	}
 
