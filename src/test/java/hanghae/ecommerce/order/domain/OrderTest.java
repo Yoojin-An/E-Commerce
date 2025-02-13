@@ -1,4 +1,4 @@
-package hanghae.ecommerce.domain;
+package hanghae.ecommerce.order.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import hanghae.ecommerce.order.domain.Order;
-import hanghae.ecommerce.order.domain.OrderItem;
 import hanghae.ecommerce.product.domain.Product;
 
 public class OrderTest {
