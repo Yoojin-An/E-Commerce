@@ -1,23 +1,24 @@
-package hanghae.ecommerce.business;
+package hanghae.ecommerce.product.application;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import hanghae.ecommerce.infrastructure.fake.FakeProductRepository;
-import hanghae.ecommerce.product.application.ProductService;
 import hanghae.ecommerce.product.domain.Product;
 import hanghae.ecommerce.product.domain.StockHistoryType;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class ProductServiceTest {
 	private ProductService productService;
 	private FakeProductRepository productRepository;
 
-	@BeforeEach
+	@BeforeAll
 	void setUp() {
 		this.productRepository = new FakeProductRepository();
 		this.productService = new ProductService(productRepository);
@@ -50,21 +51,21 @@ public class ProductServiceTest {
 		void getStockHistory() {
 			// given
 			Integer stock = 5;
-			Product product = Product.of("test", stock);
-			//            productRepository.create(product);
+			Product product = Product.of(1L, "test", stock);
+			productRepository.create(product);
+
 			String increaseOperation = "increase";
 			String decreaseOperation = "decrease";
-
 			Integer firstIncreaseQuantity = 10;
 			Integer secondIncreaseQuantity = 20;
 			Integer firstDecreaseQuantity = 3;
 			Integer secondDecreaseQuantity = 10;
 
 			// when
-			productService.updateStock(product.getId(), firstIncreaseQuantity, increaseOperation);
-			productService.updateStock(product.getId(), secondIncreaseQuantity, increaseOperation);
-			productService.updateStock(product.getId(), firstDecreaseQuantity, decreaseOperation);
-			productService.updateStock(product.getId(), secondDecreaseQuantity, decreaseOperation);
+			product = productService.updateStock(product.getId(), firstIncreaseQuantity, increaseOperation);
+			product = productService.updateStock(product.getId(), secondIncreaseQuantity, increaseOperation);
+			product = productService.updateStock(product.getId(), firstDecreaseQuantity, decreaseOperation);
+			product = productService.updateStock(product.getId(), secondDecreaseQuantity, decreaseOperation);
 
 			// then
 			assertThat(product.getStockHistory().get(0).getQuantity()).isEqualTo(firstIncreaseQuantity);

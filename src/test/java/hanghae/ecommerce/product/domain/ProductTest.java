@@ -1,4 +1,4 @@
-package hanghae.ecommerce.domain;
+package hanghae.ecommerce.product.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -9,8 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import hanghae.ecommerce.infrastructure.fake.FakeProductRepository;
-import hanghae.ecommerce.product.domain.Product;
-import hanghae.ecommerce.product.domain.StockHistoryType;
 
 public class ProductTest {
 	private final FakeProductRepository productRepository;
