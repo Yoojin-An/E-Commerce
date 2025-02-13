@@ -29,6 +29,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     // Database
     runtimeOnly 'com.mysql:mysql-connector-j'
+    runtimeOnly 'com.h2database:h2'
     // Swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.swagger.core.v3:swagger-annotations:2.1.2'
