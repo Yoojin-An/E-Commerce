@@ -12,12 +12,14 @@ import org.junit.jupiter.api.Test;
 import hanghae.ecommerce.infrastructure.fake.FakeOrderRepository;
 import hanghae.ecommerce.infrastructure.fake.FakeProductRepository;
 import hanghae.ecommerce.order.domain.OrderItem;
+import hanghae.ecommerce.product.application.ProductFacade;
 import hanghae.ecommerce.product.application.ProductService;
 import hanghae.ecommerce.product.domain.Product;
 
 public class OrderServiceTest {
 	private FakeProductRepository productRepository;
 	private FakeOrderRepository orderRepository;
+	private ProductFacade productFacade;
 	private ProductService productService;
 	private OrderService orderService;
 
@@ -26,7 +28,7 @@ public class OrderServiceTest {
 		productRepository = new FakeProductRepository();
 		orderRepository = new FakeOrderRepository();
 		productService = new ProductService(productRepository);
-		orderService = new OrderService(productService, orderRepository);
+		orderService = new OrderService(productFacade, productService, orderRepository);
 		productRepository.clear();
 		orderRepository.clear();
 	}

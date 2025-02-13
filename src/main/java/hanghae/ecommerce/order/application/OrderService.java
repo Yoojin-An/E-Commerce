@@ -9,6 +9,7 @@ import hanghae.ecommerce.order.dao.OrderRepository;
 import hanghae.ecommerce.order.domain.Order;
 import hanghae.ecommerce.order.domain.OrderItem;
 import hanghae.ecommerce.order.domain.OrderStatus;
+import hanghae.ecommerce.product.application.ProductFacade;
 import hanghae.ecommerce.product.application.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class OrderService {
+	private final ProductFacade productFacade;
 	private final ProductService productService;
 	private final OrderRepository orderRepository;
 
@@ -29,7 +31,7 @@ public class OrderService {
 
 		try {
 			for (OrderItem orderItem : orderItems) {
-				productService.updateStock(orderItem.getProduct().getId(), orderItem.getQuantity(), "decrease");
+				productFacade.updateStock(orderItem.getProduct().getId(), orderItem.getQuantity(), "decrease");
 				decreasedItems.add(orderItem);
 			}
 			return order;
@@ -43,7 +45,7 @@ public class OrderService {
 	public void cancelOrder(Order order, List<OrderItem> decreasedItems) {
 		order.modifyStatus(OrderStatus.CANCELED);
 		decreasedItems.forEach(item ->
-			productService.updateStock(item.getProduct().getId(), item.getQuantity(), "increase")
+			productFacade.updateStock(item.getProduct().getId(), item.getQuantity(), "increase")
 		);
 		orderRepository.update(order);
 	}
