@@ -1,6 +1,9 @@
 package hanghae.ecommerce.product.application;
 
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import hanghae.ecommerce.product.dao.ProductRepository;
 import hanghae.ecommerce.product.domain.Product;
@@ -29,7 +32,8 @@ public class ProductService {
 			.orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
 	}
 
-	public Product updateStock(Long productId, Integer quantity, String operation) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = ObjectOptimisticLockingFailureException.class)
+	public Product updateStockWithTransaction(Long productId, Integer quantity, String operation) {
 		Product product = getProduct(productId);
 
 		if ("increase".equalsIgnoreCase(operation)) {

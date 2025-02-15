@@ -3,6 +3,9 @@ package hanghae.ecommerce.product.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +33,9 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Version
+	private int version;
+
 	@Column(name = "name", nullable = false)
 	private String name;
 
@@ -36,6 +43,7 @@ public class Product {
 	private Integer stock;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "product_id")
 	@Builder.Default
 	private List<StockHistory> stockHistory = new ArrayList<>();

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hanghae.ecommerce.product.application.ProductFacade;
 import hanghae.ecommerce.product.application.ProductService;
 import hanghae.ecommerce.product.domain.Product;
 import hanghae.ecommerce.product.domain.StockHistory;
@@ -24,7 +25,9 @@ import lombok.AllArgsConstructor;
 @RequestMapping("products")
 @AllArgsConstructor
 public class ProductController {
+	private final ProductFacade productFacade;
 	private final ProductService productService;
+	;
 
 	@Tag(name = "상품 입고", description = "상품을 등록합니다.")
 	@PostMapping
@@ -50,7 +53,7 @@ public class ProductController {
 		@PathVariable Long productId,
 		@RequestBody StockUpdateRequest stockUpdateRequest
 	) {
-		Product product = productService.updateStock(productId, stockUpdateRequest.getQuantity(),
+		Product product = productFacade.updateStock(productId, stockUpdateRequest.getQuantity(),
 			stockUpdateRequest.getOperation());
 		return ResponseEntity.ok(StockResponse.of(product));
 	}
