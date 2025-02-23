@@ -17,7 +17,7 @@ public class OrderTest {
 
 	@Nested
 	@DisplayName("주문 생성")
-	public class createOrder {
+	public class OrderCreationTest {
 		@Test
 		@DisplayName("주문을 생성한다")
 		void successToCreateOrder() {
