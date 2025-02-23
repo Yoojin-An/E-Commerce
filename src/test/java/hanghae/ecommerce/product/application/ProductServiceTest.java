@@ -32,7 +32,7 @@ public class ProductServiceTest {
 		@DisplayName("이름이 중복될 경우 상품 등록에 실패한다")
 		void failToCreateProductWhenNameIsDuplicated() {
 			// given
-			String existsName = "test";
+			String existsName = "test*";
 			productService.createProduct(existsName, 5);
 
 			// then
