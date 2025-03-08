@@ -33,6 +33,11 @@ dependencies {
     // Swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
     implementation 'io.swagger.core.v3:swagger-annotations:2.1.2'
+    // Kafka
+    implementation 'org.springframework.kafka:spring-kafka'
+    implementation 'io.confluent:kafka-avro-serializer:7.8.0'
+    implementation 'org.apache.avro:avro:1.12.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     // Test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
