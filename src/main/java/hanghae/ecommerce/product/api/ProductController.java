@@ -1,6 +1,7 @@
 package hanghae.ecommerce.product.api;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hanghae.ecommerce.kafka.ProductCreatedEvent;
+import hanghae.ecommerce.kafka.ProductEventProducer;
+import hanghae.ecommerce.kafka.StockUpdatedEvent;
 import hanghae.ecommerce.product.application.ProductService;
 import hanghae.ecommerce.product.domain.Product;
 import hanghae.ecommerce.product.domain.StockHistory;
@@ -24,15 +28,23 @@ import lombok.AllArgsConstructor;
 @RequestMapping("products")
 @AllArgsConstructor
 public class ProductController {
+
+	private final ProductEventProducer productEventProducer;
 	private final ProductService productService;
 
 	@Tag(name = "상품 입고", description = "상품을 등록합니다.")
 	@PostMapping
-	public ResponseEntity<StockResponse> setProduct(
+	public String setProduct(
 		@RequestBody ProductRequest productRequest
 	) {
-		Product product = productService.createProduct(productRequest.getName(), productRequest.getQuantity());
-		return ResponseEntity.ok(StockResponse.of(product));
+		String uuid = UUID.randomUUID().toString();
+		ProductCreatedEvent event = new ProductCreatedEvent(
+			uuid,
+			productRequest.getName(),
+			productRequest.getQuantity()
+		);
+		productEventProducer.sendCommandEvent(event);
+		return uuid;
 	}
 
 	@Tag(name = "상품별 재고 조회", description = "특정 상품의 재고를 조회합니다.")
@@ -46,13 +58,19 @@ public class ProductController {
 
 	@Tag(name = "상품별 재고 증감", description = "특정 상품의 재고를 증가 또는 감소시킵니다.")
 	@PatchMapping("/{productId}/stocks")
-	public ResponseEntity<StockResponse> updateStocks(
+	public String updateStocks(
 		@PathVariable Long productId,
 		@RequestBody StockUpdateRequest stockUpdateRequest
 	) {
-		Product product = productService.updateStock(productId, stockUpdateRequest.getQuantity(),
-			stockUpdateRequest.getOperation());
-		return ResponseEntity.ok(StockResponse.of(product));
+		String uuid = UUID.randomUUID().toString();
+		StockUpdatedEvent event = new StockUpdatedEvent(
+			uuid,
+			productId,
+			stockUpdateRequest.getOperation(),
+			stockUpdateRequest.getQuantity()
+		);
+		productEventProducer.sendCommandEvent(event);
+		return uuid;
 	}
 
 	@Tag(name = "상품별 재고 증감 이력 조회", description = "특정 상품의 재고 증감 이력을 조회합니다.")

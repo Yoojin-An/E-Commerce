@@ -2,6 +2,8 @@ package hanghae.ecommerce.product.application;
 
 import org.springframework.stereotype.Service;
 
+import hanghae.ecommerce.kafka.ProductCreatedEvent;
+import hanghae.ecommerce.kafka.StockUpdatedEvent;
 import hanghae.ecommerce.product.dao.ProductRepository;
 import hanghae.ecommerce.product.domain.Product;
 import jakarta.persistence.EntityNotFoundException;
@@ -18,9 +20,9 @@ public class ProductService {
 		}
 	}
 
-	public Product createProduct(String name, Integer quantity) {
-		validateDuplicate(name);
-		Product product = Product.of(name, quantity);
+	public Product createProduct(ProductCreatedEvent event) {
+		validateDuplicate(event.getName());
+		Product product = Product.of(event.getName(), event.getQuantity());
 		return productRepository.create(product);
 	}
 
@@ -29,15 +31,15 @@ public class ProductService {
 			.orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + productId));
 	}
 
-	public Product updateStock(Long productId, Integer quantity, String operation) {
-		Product product = getProduct(productId);
+	public Product updateStock(StockUpdatedEvent event) {
+		Product product = getProduct(event.getProductId());
 
-		if ("increase".equalsIgnoreCase(operation)) {
-			product.increaseStock(quantity);
-		} else if ("decrease".equalsIgnoreCase(operation)) {
-			product.decreaseStock(quantity);
+		if ("increase".equalsIgnoreCase(event.getOperation())) {
+			product.increaseStock(event.getQuantity());
+		} else if ("decrease".equalsIgnoreCase(event.getOperation())) {
+			product.decreaseStock(event.getQuantity());
 		} else {
-			throw new IllegalArgumentException("Invalid operation: " + operation);
+			throw new IllegalArgumentException("Invalid operation: " + event.getOperation());
 		}
 
 		return productRepository.update(product);
